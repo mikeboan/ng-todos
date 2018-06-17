@@ -13,15 +13,16 @@ export function todosReducer(state = {}, action: Action) {
 
   switch (action.type) {
 
-    case todoActions.REQUEST_TODOS:
-      return { ...state, loading: true };
-
     case todoActions.RECEIVE_TODOS:
       const newTodos = action.payload.reduce((accum, todo) => {
         accum[todo.id] = todo;
         return accum;
       }, {});
-      return { ...state, ...newTodos, loading: false };
+      return { ...state, ...newTodos };
+
+    case todoActions.RECEIVE_TODO:
+      const { todo } = action.payload;
+      return { ...state, [todo.id]: todo };
 
     default:
       return state;

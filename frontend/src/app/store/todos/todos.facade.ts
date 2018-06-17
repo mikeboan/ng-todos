@@ -7,7 +7,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import {Observable} from 'rxjs';
-import {map, mergeMap, tap} from 'rxjs/operators';
+import {delay, map, mergeMap, tap} from 'rxjs/operators';
+import {ReceiveTodo} from "./todos.actions";
 
 @Injectable()
 export class TodosFacade {
@@ -16,6 +17,7 @@ export class TodosFacade {
   @Effect()
   getTodos$: Observable<Action> = this.actions$.pipe(
     ofType<todosActions.RequestTodos>(todosActions.REQUEST_TODOS),
+    delay(2000),
     mergeMap(() =>
       this.http.get('http://localhost:3000/todos.json').pipe(
         tap(console.log),
@@ -24,6 +26,19 @@ export class TodosFacade {
     )
   );
 
+  @Effect()
+  toggleTodo$: Observable<Action> = this.actions$.pipe(
+    ofType<todosActions.ToggleTodo>(todosActions.TOGGLE_TODO),
+    mergeMap((action) => {
+      const { todo } = action.payload;
+      const req$ = this.http.patch(`http://localhost:3000/todos/${todo.id}`, { complete: !todo.complete });
+      return req$.pipe(
+        tap(console.log),
+        map(todo => new ReceiveTodo(todo))
+      )
+    }
+
+  );
 
   constructor(private http: HttpClient, private actions$: Actions, private store: Store<AppState>) {}
 }

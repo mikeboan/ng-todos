@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from "rxjs/Observable";
-import {RequestTodos, Todo, TodosFacade} from "./store/todos";
+import {RequestTodos, Todo, TodosFacade, ToggleTodo} from "./store/todos";
 import {Store} from "@ngrx/store";
 import {AppState} from "./store/app-state";
 
@@ -16,5 +16,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new RequestTodos());
+  }
+
+  toggleComplete(todo: Todo) {
+    this.store.dispatch(new ToggleTodo(todo))
   }
 }
