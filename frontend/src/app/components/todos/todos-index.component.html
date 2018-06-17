@@ -1,0 +1,3 @@
+<ul *ngIf="(todos$ | async) as todos">
+  <app-todo-item *ngFor="let todo of todos" [todo]="todo"></app-todo-item>
+</ul>

@@ -1,0 +1,7 @@
+<li>
+  <p [class.completed]="todo.complete">{{todo.body}}</p>
+  <button (click)="toggleComplete(todo)">Toggle Complete</button>
+  <button (click)="showComments=!showComments">Show Comments</button>
+
+  <span *ngIf="showComments">comments will go here</span>
+</li>

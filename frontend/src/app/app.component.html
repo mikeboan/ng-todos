@@ -1,7 +1,0 @@
-<h1>todos</h1>
-<ul *ngIf="(todos$ | async) as todos">
-  <li *ngFor="let todo of todos">
-    <p [class.completed]="todo.complete">{{todo.body}}</p>
-    <button (click)="toggleComplete(todo)">Toggle Complete</button>
-  </li>
-</ul>

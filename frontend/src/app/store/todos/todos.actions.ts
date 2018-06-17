@@ -8,6 +8,7 @@ export const TOGGLE_TODO = "TOGGLE_TODO";
 
 export class RequestTodos implements Action {
   type = REQUEST_TODOS;
+  payload?:any;
 }
 
 export class ReceiveTodos implements Action {

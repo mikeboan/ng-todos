@@ -36,7 +36,7 @@ export class TodosFacade {
         tap(console.log),
         map(todo => new ReceiveTodo(todo))
       )
-    }
+    })
 
   );
 
