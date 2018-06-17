@@ -1,0 +1,1 @@
+json.extract! comment, :id, :body, :todo_id

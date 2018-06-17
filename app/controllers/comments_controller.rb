@@ -3,14 +3,14 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
-    @comments = Comment.all
+    @comments = Comment.where(todo_id: params[:todo_id])
 
-    render json: @comments
+    render :index
   end
 
   # GET /comments/1
   def show
-    render json: @comment
+    render :show
   end
 
   # POST /comments
@@ -18,7 +18,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
 
     if @comment.save
-      render json: @comment, status: :created, location: @comment
+      render :show, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1
   def update
     if @comment.update(comment_params)
-      render json: @comment
+      render :show
     else
       render json: @comment.errors, status: :unprocessable_entity
     end

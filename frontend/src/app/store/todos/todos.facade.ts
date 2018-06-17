@@ -31,7 +31,7 @@ export class TodosFacade {
     ofType<todosActions.ToggleTodo>(todosActions.TOGGLE_TODO),
     mergeMap((action) => {
       const { todo } = action.payload;
-      const req$ = this.http.patch(`http://localhost:3000/todos/${todo.id}`, { complete: !todo.complete });
+      const req$ = this.http.patch(`http://localhost:3000/todos/${todo.id}.json`, { complete: !todo.complete });
       return req$.pipe(
         tap(console.log),
         map(todo => new ReceiveTodo(todo))
