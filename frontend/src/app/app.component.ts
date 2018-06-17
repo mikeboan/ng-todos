@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Http} from "@angular/http";
 import {Observable} from "rxjs/Observable";
-import {map} from "rxjs/operators";
+import {RequestTodos, Todo, TodosFacade} from "./store/todos";
+import {Store} from "@ngrx/store";
+import {AppState} from "./store/app-state";
 
 @Component({
   selector: 'app-root',
@@ -9,15 +10,11 @@ import {map} from "rxjs/operators";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  todos$: Observable<any>;
+  todos$: Observable<Todo[]> = this.todosService.todos$;
 
-  constructor(private http: Http) {}
+  constructor(private todosService: TodosFacade, private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.todos$ = this.http
-      .get('http://localhost:3000/todos.json')
-      .pipe(
-        map( res => res.json())
-      );
+    this.store.dispatch(new RequestTodos());
   }
 }
